@@ -1,0 +1,6 @@
+<factorypath>
+    <factorypathentry kind="VARJAR" enabled="true" runInBatchMode="false"
+        id="M2_REPO/org/hibernate/hibernate-jpamodelgen/1.2.0.Final/hibernate-jpamodelgen-1.2.0.Final.jar"/>
+    <factorypathentry kind="VARJAR" enabled="true" runInBatchMode="false"
+        id="M2_REPO/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.0.Final/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
+</factorypath>
