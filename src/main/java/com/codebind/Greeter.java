@@ -6,8 +6,8 @@ import javax.inject.Inject;
 
 public class Greeter {
 	
-	private PhraseBuilder phraseBuilder;
-
+	public PhraseBuilder phraseBuilder;
+	
     @Inject
     public Greeter(PhraseBuilder phraseBuilder) {
         this.phraseBuilder = phraseBuilder;

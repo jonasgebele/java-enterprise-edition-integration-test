@@ -25,5 +25,4 @@
         <property name="url" value="jdbc:postgresql://localhost:5432/postgres"/>
     </jdbc-connection-pool>
     -->
-    
 </resources>

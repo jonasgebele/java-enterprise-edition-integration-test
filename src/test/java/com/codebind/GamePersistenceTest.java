@@ -35,7 +35,7 @@ public class GamePersistenceTest {
 	@Deployment
 	public static WebArchive createDeployment() {
 		WebArchive archiv = ShrinkWrap
-				.create(WebArchive.class, "test.war")
+				.create(WebArchive.class,"test.war")
 				.addClass(Game.class)
 				.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
