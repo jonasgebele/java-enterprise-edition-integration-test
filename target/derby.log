@@ -1,0 +1,11 @@
+----------------------------------------------------------------
+Tue Mar 19 12:52:59 CET 2019:
+Booten von Derby Version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): Instanz a816c00e-0169-95cc-2ae5-000008cc5820
+für Datenbankverzeichnis C:\opt\JDEV\workspace\checker-ws\maven-demo\target\databases\derby   mit Klassenladeprogrammn sun.misc.Launcher$AppClassLoader@232204a1
+
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_162-b35
+user.dir=C:\opt\JDEV\workspace\checker-ws\maven-demo
+derby.system.home=null
+derby.stream.error.file=C:\opt\JDEV\workspace\checker-ws\maven-demo\target/derby.log
+Das Ladeprogramm für Datenbankklassen wurde gestartet - derby.database.classpath=''
