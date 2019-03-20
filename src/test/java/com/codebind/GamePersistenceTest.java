@@ -25,10 +25,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- * author: Jonas Gebele
- **/
-
 @RunWith(Arquillian.class)
 public class GamePersistenceTest {
 
@@ -74,10 +70,11 @@ public class GamePersistenceTest {
 		System.out.println("Inserting records.");
 		for (String title : TEST_DATEN) {
 			Game game = new Game(title);
+			// oder game.title = title;
 			em.persist(game);
 		}
 		utx.commit();
-		em.clear(); // clear the persistence context
+		em.clear(); // clears the persistence context
 	}
 	
 	private void startTransaction() throws Exception {
@@ -118,5 +115,4 @@ public class GamePersistenceTest {
 	    System.out.println("Found " + games.size() + " games (using Criteria):");
 	    assertContainsAllGames(games);
 	}
-
 }

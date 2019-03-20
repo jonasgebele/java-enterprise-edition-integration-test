@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.codebind.GamePersistenceTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.126 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.682 sec
