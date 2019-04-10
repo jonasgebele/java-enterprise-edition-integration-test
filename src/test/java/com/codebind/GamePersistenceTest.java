@@ -8,10 +8,9 @@ import java.util.Set;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -30,13 +29,10 @@ public class GamePersistenceTest {
 
 	@Deployment
 	public static WebArchive createDeployment() {
-		WebArchive archiv = ShrinkWrap
-				.create(WebArchive.class,"test.war")
-				.addClass(Game.class)
+		WebArchive archiv = ShrinkWrap.create(WebArchive.class, "test.war").addClass(Game.class)
 				.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				.addAsWebInfResource("glassfish-resources.xml");
-		
+				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml").addAsWebInfResource("glassfish-resources.xml");
+
 		System.out.println(archiv.toString(true));
 		return archiv;
 	}
@@ -48,7 +44,7 @@ public class GamePersistenceTest {
 	UserTransaction utx;
 
 	private static final String[] TEST_DATEN = { "Data1", "Data2", "Data3" };
-	
+
 	@Before
 	public void preparePersistenceTest() throws Exception {
 		clearData();
@@ -60,7 +56,7 @@ public class GamePersistenceTest {
 		utx.begin();
 		em.joinTransaction();
 		System.out.println("Dumping old records.");
-		em.createQuery("delete from Game").executeUpdate();
+		em.createQuery("DELETE FROM Game").executeUpdate();
 		utx.commit();
 	}
 
@@ -70,13 +66,13 @@ public class GamePersistenceTest {
 		System.out.println("Inserting records.");
 		for (String title : TEST_DATEN) {
 			Game game = new Game(title);
-			// oder game.title = title;
+			;
 			em.persist(game);
 		}
 		utx.commit();
-		em.clear(); // clears the persistence context
+		em.clear();
 	}
-	
+
 	private void startTransaction() throws Exception {
 		utx.begin();
 		em.joinTransaction();
@@ -86,33 +82,23 @@ public class GamePersistenceTest {
 	public void commitTransaction() throws Exception {
 		utx.commit();
 	}
-	
+
 	private static void assertContainsAllGames(Collection<Game> retrievedGames) {
-	    Assert.assertEquals(TEST_DATEN.length, retrievedGames.size());
-	    final Set<String> retrievedGameTitles = new HashSet<String>();
-	    for (Game game : retrievedGames) {
-	        System.out.println("* " + game);
-	        retrievedGameTitles.add(game.getTitle());
-	    }
-	    Assert.assertTrue(retrievedGameTitles.containsAll(Arrays.asList(TEST_DATEN)));
+		Assert.assertEquals(TEST_DATEN.length, retrievedGames.size());
+		final Set<String> retrievedGameTitles = new HashSet<String>();
+		for (Game game : retrievedGames) {
+			System.out.println("" + game);
+			retrievedGameTitles.add(game.getTitle());
+		}
+		Assert.assertTrue(retrievedGameTitles.containsAll(Arrays.asList(TEST_DATEN)));
 	}
-	
+
 	@Test
-	public void shouldFindAllGamesUsingCriteriaApi() throws Exception {
-	    CriteriaBuilder builder = em.getCriteriaBuilder();
-	    CriteriaQuery<Game> criteria = builder.createQuery(Game.class);
-
-	    Root<Game> game = criteria.from(Game.class);
-	    criteria.select(game);
-	    // TIP: If you don't want to use the JPA 2 Metamodel,
-	    // you can change the get() method call to get("id")
-	    criteria.orderBy(builder.asc(game.get(Game_.id)));
-	    // No WHERE clause, which implies select all
-
-	    System.out.println("Selecting (using Criteria).");
-	    List<Game> games = em.createQuery(criteria).getResultList();
-
-	    System.out.println("Found " + games.size() + " games (using Criteria):");
-	    assertContainsAllGames(games);
+	public void shouldFindAllGames() throws Exception {
+		String ql = "SELECT g FROM Game g ORDER BY g.id";
+		List<Game> query = em.createQuery(ql, Game.class).getResultList();
+		
+		System.out.println(query.size() + " Elemente gefunden!");
+		assertContainsAllGames(query);
 	}
 }
